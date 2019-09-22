@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Página Principal";
+}
+
+<div class="jumbotron">
+    <h1>Comparador</h1>
+    <p class="lead">Compare produtos e verifique qual é a melhor escolha.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Produtos</h2>
+        <p>Cadastre os produtos que deseja comparar.</p>
+        <button type="button" class="btn btn-primary" onclick="@("window.location.href='" + @Url.Action("Index", "Produto") + "'");">Produtos</button>
+    </div>
+    <div class="col-md-6">
+        <h2>Comparar produtos</h2>
+        <p>Compare produtos e de acorodo com a suas condições, verifique qual o produto melhor se adequa a sua necessidade.</p>
+        <button type="button" class="btn btn-success" onclick="@("window.location.href='" + @Url.Action("Index", "Comparar") + "'");">Comparar</button>
+    </div>
+</div>
