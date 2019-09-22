@@ -182,6 +182,20 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Comparador.Dados.Interface\Comparador.Dados.Interface.csproj">
+      <Project>{F036E360-F74E-43F9-9338-AFCB8BAF0378}</Project>
+      <Name>Comparador.Dados.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Comparador.Dados.SqlServer\Comparador.Dados.SqlServer.csproj">
+      <Project>{7CB8001D-E4B6-4CD2-8B1A-585FA0609C12}</Project>
+      <Name>Comparador.Dados.SqlServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Comparador.Dados.Tabela\Comparador.Dados.Tabela.csproj">
+      <Project>{57315597-C6DB-4306-9C2C-20E17A4DA2F9}</Project>
+      <Name>Comparador.Dados.Tabela</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
