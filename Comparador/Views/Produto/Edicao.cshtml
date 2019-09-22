@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Cadastro ou Edição de Produtos";
+}
+
+@model Comparador.Models.Produto
+
+    <form method="post">
+        <div class="jumbotron">
+            <h1>Produto</h1>
+        </div>
+
+        <div class="row bg-danger">
+            @ViewBag.Error
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Nome</p>
+            </div>
+            <div class="col-md-9">
+                @Html.EditorFor(p => p.Nome)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Valor</p>
+            </div>
+            <div class="col-md-9">
+                @Html.EditorFor(p => p.Valor)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Garantia</p>
+            </div>
+            <div class="col-md-9">
+                @Html.EditorFor(p => p.Garantia)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <p>Gasto Energia Hora</p>
+            </div>
+            <div class="col-md-9">
+                @Html.EditorFor(p => p.GastoEnergiaHora)
+            </div>
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+
+    </form>

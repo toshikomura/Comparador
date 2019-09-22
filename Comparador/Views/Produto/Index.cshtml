@@ -5,3 +5,25 @@
 <div class="jumbotron">
     <h1>Produtos</h1>
 </div>
+
+<button type="button" class="btn btn-success" onclick="@("window.location.href='" + @Url.Action("Edicao", "Produto") + "'");">Cadastrar</button>
+
+<table class="table table-bordered table-striped table-responsive table-hover ">
+    <tr>
+        <th>Produto ID </th>
+        <th>Nome </th>
+        <th>Valor </th>
+        <th>Garantia</th>
+        <th><span title="Gasto Energia Hora">Gasto</span></th>
+    </tr>
+    @foreach (var produto in Model)
+    {
+        <tr>
+            <td>@produto.ID</td>
+            <td>@produto.Nome</td>
+            <td>@produto.Valor</td>
+            <td>@produto.Garantia</td>
+            <td>@produto.GastoEnergiaHora</td>
+        </tr>
+    }
+</table>

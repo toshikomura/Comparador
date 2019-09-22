@@ -15,8 +15,8 @@ namespace Comparador
 
             routes.MapRoute(
                 name: "Produto",
-                url: "produtos/{id}",
-                defaults: new { controller = "Produto", action = "Index" }
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Produto", action = "Index", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

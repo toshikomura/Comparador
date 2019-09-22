@@ -8,6 +8,7 @@
         public int Garantia { get; set; }
         public int GastoEnergiaHora { get; set; }
 
+        public Produto() { }
         public Produto(int id, string nome, int valor, int garantia, int gastoEnergiaHora)
         {
             ID = id;
