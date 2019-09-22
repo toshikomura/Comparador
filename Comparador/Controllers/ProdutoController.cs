@@ -17,9 +17,43 @@ namespace Comparador.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edicao()
+        public ActionResult Insercao()
         {
-            return View();
+            return View("Edicao");
+        }
+
+        public ActionResult Insercao(Produto produto)
+        {
+            try
+            {
+                ValidarProduto(produto);
+                SalvarProduto(produto);
+                return RedirectToAction("Index", "Produto");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View("Edicao");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Edicao(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new Exception("Informar identificador do produto.");
+
+                var produto = BuscarProduto(id);
+
+                return View(produto);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
         }
 
         public ActionResult Edicao(Produto produto)
@@ -38,6 +72,7 @@ namespace Comparador.Controllers
         }
 
         #region Private
+        #region Operações no banco
         private List<Produto> BuscarProdutos()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["ComparadorBD"].ConnectionString;
@@ -64,6 +99,78 @@ namespace Comparador.Controllers
             }
         }
 
+        private Produto BuscarProduto(int id)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ComparadorBD"].ConnectionString;
+            using (var conn = new SqlConnection(connectionString))
+            using (var command = new SqlCommand("SelecionarProduto", conn)
+            {
+                CommandType = CommandType.StoredProcedure
+            })
+            {
+                conn.Open();
+                command.Parameters.Add("@ID", SqlDbType.Int).Value = id;
+                var result = command.ExecuteReader();
+                Produto produto = null;
+                if (result.Read())
+                {
+                    produto = new Produto(
+                        Convert.ToInt32(result[0]),
+                        Convert.ToString(result[1]),
+                        Convert.ToInt32(result[2]),
+                        Convert.ToInt32(result[3]),
+                        Convert.ToInt32(result[4])
+                    );
+                }
+                return produto;
+            }
+        }
+
+        private void SalvarProduto(Produto produto)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ComparadorBD"].ConnectionString;
+            using (var conn = new SqlConnection(connectionString))
+            {
+                string procedure = string.Empty;
+                if (produto.ID <= 0)
+                {
+                    using (var command = new SqlCommand("InserirProduto", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    })
+                    {
+
+                        command.Parameters.Add("@Nome", SqlDbType.VarChar, 255).Value = produto.Nome;
+                        command.Parameters.Add("@Valor", SqlDbType.Int).Value = produto.Valor;
+                        command.Parameters.Add("@Garantia", SqlDbType.Int).Value = produto.Garantia;
+                        command.Parameters.Add("@GastoEnergiaHora", SqlDbType.Int).Value = produto.GastoEnergiaHora;
+
+                        conn.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    using (var command = new SqlCommand("EditarProduto", conn)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    })
+                    {
+                        command.Parameters.Add("@ID", SqlDbType.Int).Value = produto.ID;
+                        command.Parameters.Add("@Nome", SqlDbType.VarChar, 255).Value = produto.Nome;
+                        command.Parameters.Add("@Valor", SqlDbType.Int).Value = produto.Valor;
+                        command.Parameters.Add("@Garantia", SqlDbType.Int).Value = produto.Garantia;
+                        command.Parameters.Add("@GastoEnergiaHora", SqlDbType.Int).Value = produto.GastoEnergiaHora;
+
+                        conn.Open();
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Validar
         private void ValidarProduto(Produto produto)
         {
             if (produto == null)
@@ -77,25 +184,7 @@ namespace Comparador.Controllers
             if (produto.GastoEnergiaHora <= 0)
                 throw new Exception("Produto precisa ter um gasto de energia por hora.");
         }
-
-        private void SalvarProduto(Produto produto)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["ComparadorBD"].ConnectionString;
-            using (var conn = new SqlConnection(connectionString))
-            using (var command = new SqlCommand("InserirProduto", conn)
-            {
-                CommandType = CommandType.StoredProcedure
-            })
-            {
-                command.Parameters.Add("@Nome", SqlDbType.VarChar, 255).Value = produto.Nome;
-                command.Parameters.Add("@Valor", SqlDbType.Int).Value = produto.Valor;
-                command.Parameters.Add("@Garantia", SqlDbType.Int).Value = produto.Garantia;
-                command.Parameters.Add("@GastoEnergiaHora", SqlDbType.Int).Value = produto.GastoEnergiaHora;
-
-                conn.Open();
-                command.ExecuteNonQuery();
-            }
-        }
+        #endregion
         #endregion
     }
 }

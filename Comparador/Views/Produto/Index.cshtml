@@ -6,7 +6,7 @@
     <h1>Produtos</h1>
 </div>
 
-<button type="button" class="btn btn-success" onclick="@("window.location.href='" + @Url.Action("Edicao", "Produto") + "'");">Cadastrar</button>
+<button type="button" class="btn btn-success" onclick="@("window.location.href='" + @Url.Action("Insercao", "Produto") + "'");">Cadastrar</button>
 
 <table class="table table-bordered table-striped table-responsive table-hover ">
     <tr>
@@ -15,6 +15,7 @@
         <th>Valor </th>
         <th>Garantia</th>
         <th><span title="Gasto Energia Hora">Gasto</span></th>
+        <th>Operações</th>
     </tr>
     @foreach (var produto in Model)
     {
@@ -24,6 +25,9 @@
             <td>@produto.Valor</td>
             <td>@produto.Garantia</td>
             <td>@produto.GastoEnergiaHora</td>
+            <td>
+                <button type="button" onclick="@("window.location.href='" + @Url.Action("Edicao", "Produto") + "/" + @produto.ID + "'");">Editar</button>
+            </td>
         </tr>
     }
 </table>
