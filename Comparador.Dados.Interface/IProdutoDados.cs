@@ -8,5 +8,6 @@ namespace Comparador.Dados.Interface
         List<ProdutoTabela> BuscarProdutos();
         ProdutoTabela BuscarProduto(int id);
         void SalvarProduto(ProdutoTabela produto);
+        void ExcluirProduto(int id);
     }
 }

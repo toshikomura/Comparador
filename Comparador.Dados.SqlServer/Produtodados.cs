@@ -105,5 +105,24 @@ namespace Comparador.Dados.SqlServer
                 }
             }
         }
+
+        public void ExcluirProduto(int id)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ComparadorBD"].ConnectionString;
+            using (var conn = new SqlConnection(connectionString))
+            {
+                string procedure = string.Empty;
+                using (var command = new SqlCommand("ExcluirProduto", conn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                })
+                {
+                    command.Parameters.Add("@ID", SqlDbType.Int).Value = id;
+
+                    conn.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

@@ -27,6 +27,7 @@
             <td>@produto.GastoEnergiaHora</td>
             <td>
                 <button type="button" onclick="@("window.location.href='" + @Url.Action("Edicao", "Produto") + "/" + @produto.ID + "'");">Editar</button>
+                <button type="button" onclick="@("window.location.href='" + @Url.Action("Exclusao", "Produto") + "/" + @produto.ID + "'");">Excluir</button>
             </td>
         </tr>
     }

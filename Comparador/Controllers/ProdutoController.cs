@@ -74,6 +74,24 @@ namespace Comparador.Controllers
             }
         }
 
+        public ActionResult Exclusao(int id)
+        {
+            try
+            {
+                if (id <= 0)
+                    throw new Exception("Informar identificador do produto.");
+
+                IProdutoDados pd = new ProdutoDados();
+                pd.ExcluirProduto(id);
+                return RedirectToAction("Index", "Produto");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
         public ActionResult Detalhe(int id)
         {
             IProdutoDados pd = new ProdutoDados();
