@@ -11,13 +11,13 @@
 
         <div class="row">
             <div class="col-md-4">
-                @Html.DropDownListFor(x => Model.SelectedProduto1, new SelectList(Model.Produtos, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "ID" })
+                @Html.DropDownListFor(x => Model.SelectedProduto1, new SelectList(Model.Produtos, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "SelectedProduto1" })
             </div>
             <div class="col-md-4">
-                @Html.DropDownListFor(x => Model.SelectedProduto2, new SelectList(Model.Produtos, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "ID" })
+                @Html.DropDownListFor(x => Model.SelectedProduto2, new SelectList(Model.Produtos, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "SelectedProduto2" })
             </div>
             <div class="col-md-4">
-                <button type="submit" class="btn btn-success center-block" onclick="@("window.location.href='" + @Url.Action("Mostrar", "Comparar") + "'");">Comparar</button>
+                <button type="button" class="btn btn-success center-block" id="Comparar">Comparar</button>
             </div>
         </div>
              
@@ -25,16 +25,14 @@
 
         <div class="row">
             <div class="col-md-6">
-                @if (Model.SelectedProduto1 > 0)
-                {
-                    @Html.Action("Detalhe", "Produto", new { id = Model.SelectedProduto1 })
-                }
+                <div id="produto1">
+
+                </div>
             </div>
             <div class="col-md-6">
-                @if (Model.SelectedProduto2 > 0)
-                {
-                    @Html.Action("Detalhe", "Produto", new { id = Model.SelectedProduto2 })
-                }
+                <div id="produto2">
+
+                </div>
             </div>
         </div>        
 
