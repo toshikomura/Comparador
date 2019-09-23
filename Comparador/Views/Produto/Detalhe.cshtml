@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Cadastro ou Edição de Produtos";
+}
+
+@model Comparador.Models.Produto
+
+<div class="row bg-danger">
+    @ViewBag.Error
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.LabelFor(p => p.Nome)
+    </div>
+    <div class="col-md-6">
+        @Html.DisplayFor(p => p.Nome)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.LabelFor(p => p.Valor)
+    </div>
+    <div class="col-md-6">
+        @Html.DisplayFor(p => p.Valor)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.LabelFor(p => p.Garantia)
+    </div>
+    <div class="col-md-6">
+        @Html.DisplayFor(p => p.Garantia)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.LabelFor(p => p.GastoEnergiaHora)
+    </div>
+    <div class="col-md-6">
+        @Html.DisplayFor(p => p.GastoEnergiaHora)
+    </div>
+</div>

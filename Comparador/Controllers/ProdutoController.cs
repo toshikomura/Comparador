@@ -1,9 +1,8 @@
-﻿using Comparador.Dados.Interface;
+﻿using Comparador.Comum;
+using Comparador.Dados.Interface;
 using Comparador.Dados.SqlServer;
-using Comparador.Dados.Tabela;
 using Comparador.Models;
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Comparador.Controllers
@@ -13,7 +12,7 @@ namespace Comparador.Controllers
         public ActionResult Index()
         {
             IProdutoDados pd = new ProdutoDados();
-            var produtos = Converter(pd.BuscarProdutos());
+            var produtos = Conversor.Converter(pd.BuscarProdutos());
             return View(produtos);
         }
 
@@ -29,7 +28,7 @@ namespace Comparador.Controllers
             {
                 ValidarProduto(produto);
                 IProdutoDados pd = new ProdutoDados();
-                pd.SalvarProduto(Converter(produto));
+                pd.SalvarProduto(Conversor.Converter(produto));
                 return RedirectToAction("Index", "Produto");
             }
             catch (Exception ex)
@@ -48,7 +47,7 @@ namespace Comparador.Controllers
                     throw new Exception("Informar identificador do produto.");
 
                 IProdutoDados pd = new ProdutoDados();
-                var produto = Converter(pd.BuscarProduto(id));
+                var produto = Conversor.Converter(pd.BuscarProduto(id));
 
                 return View(produto);
             }
@@ -65,7 +64,7 @@ namespace Comparador.Controllers
             {
                 ValidarProduto(produto);
                 IProdutoDados pd = new ProdutoDados();
-                pd.SalvarProduto(Converter(produto));
+                pd.SalvarProduto(Conversor.Converter(produto));
                 return RedirectToAction("Index", "Produto");
             }
             catch(Exception ex)
@@ -73,6 +72,13 @@ namespace Comparador.Controllers
                 ViewBag.Error = ex.Message;
                 return View();
             }
+        }
+
+        public ActionResult Detalhe(int id)
+        {
+            IProdutoDados pd = new ProdutoDados();
+            var produto = Conversor.Converter(pd.BuscarProduto(id));
+            return PartialView(produto);
         }
 
         #region Private
@@ -90,27 +96,6 @@ namespace Comparador.Controllers
                 throw new Exception("Produto precisa ter uma garantia.");
             if (produto.GastoEnergiaHora <= 0)
                 throw new Exception("Produto precisa ter um gasto de energia por hora.");
-        }
-        #endregion
-
-        #region Converter
-        private ProdutoTabela Converter(Produto produto)
-        {
-            return new ProdutoTabela(produto.ID, produto.Nome, produto.Valor, produto.Valor, produto.GastoEnergiaHora);
-        }
-
-        private Produto Converter(ProdutoTabela produto)
-        {
-            return new Produto(produto.ID, produto.Nome, produto.Valor, produto.Valor, produto.GastoEnergiaHora);
-        }
-
-        private List<Produto> Converter(List<ProdutoTabela> produtos)
-        {
-            var listProdutos = new List<Produto>();
-            foreach (var produto in produtos)
-                listProdutos.Add(new Produto(produto.ID, produto.Nome, produto.Valor, produto.Garantia, produto.GastoEnergiaHora));
-
-            return listProdutos;
         }
         #endregion
 
